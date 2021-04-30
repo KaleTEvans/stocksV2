@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Staatliches&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/style.css" />
+    <title>Stonks</title>
+</head>
+
+<body>
+    <header>
+        <h1 class="title">Big Cock Stocks</h1>
+        <h3 class='market-sentiment'>Overall Market Sentiment: <span id='gen-sent-value'></span></h2>
+    </header>
+
+    <main>
+        <div class='sentiment-info'>
+            <div class='row align-items-center'>
+                <div class="col-12 col-md-12 col-xl-6 mb-3 sentiment">
+                    <div class="card chart-box">
+                        <h4 class="chart-title">Sentiment in the Last Month</h4>
+                        <div id="sentimentChartDiv" class="flex-row" style="width:95%; height:462px; margin:0 auto;"></div>
+                    </div>
+                </div>
+                <div class='col-4 col-md-4 col-xl-2 mb-3'>
+                    <nav class='card top-sentiment' id='top-sentiment'>
+                        <h4>Top Sentiment</h4>
+                        <ul class='top-suggestions'>
+                        </ul>
+                    </nav>
+                </div>
+                <div class='col-8 col-md-8 col-xl-4 mb-3'>
+                    <nav class='card gov-trades' id='gov-trades'>
+                        <h4>Recent Government Transactions</h4>
+                        <ul class='gov-transactions'></ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div class="ticker-form">
+            <form id="stock-ticker" >
+                <label for="ticker">Enter a stock ticker:</label>
+                <input type="text" id="ticker" name="ticker" class="form-input" />
+                <button type="submit">submit</button>
+            </form>
+        </div>
+        <div class="card-group" >
+            <div class="col-12 col-md-3 col-xl-3 mb-3">
+                <div class="card" id='yahoo-data'></div>
+            </div>
+            <div class="col-12 col-md-12 col-xl-5 mb-5">
+                <div class="card chart-box">
+                    <h4 class='chart-title'><span id="tech-chart-title"></span></h4>
+                    <div class="chart-options">
+                        <select class="drop-down-options" id="tech-indicator">
+                            <option value="" disable selected>Technical Indicators</option>
+                            <option value="SMA">SMA</option>
+                            <option value="EMA">EMA</option>
+                            <option value="WMA">WMA</option>
+                        </select>
+                        <select class="drop-down-options" id="time-interval">
+                            <option value="" disable selected>Time Interval</option>
+                            <option value="60min">60 Minutes</option>
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly">Monthly</option>
+                        </select>
+                        <button type="submit" id="tech-charts">Generate</button>
+                    </div>
+                    <div id="chartDiv" class="flex-row" style="width:95%; height:500px; margin:0 auto;"></div>
+                </div>
+            </div>
+        </div>
+        
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="https://code.jscharting.com/2.9.0/jscharting.js"></script>
+    <script src="assets/js/config.js"></script>
+    <script src="assets/js/algo.js"></script>
+    <script src="assets/js/script.js"></script>
+</body>
+</html>

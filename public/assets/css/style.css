@@ -1,0 +1,113 @@
+header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-group {
+    margin-top: 15px;
+}
+
+.ticker-form {
+    display: flex;
+    justify-content: center;
+    margin: 25px 0;
+}
+
+li {
+    list-style: none;
+}
+
+.top-sentiment, .gov-trades {
+    height: 500px;
+}
+
+.top-suggestions, .gov-transactions {
+    padding: 2px;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+.top-suggestions {
+    padding: 15px;
+}
+
+.top-suggested {
+    cursor: pointer;
+    opacity: 0.9;
+    margin: 5px;
+}
+.top-suggested:hover {
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+.best-suggested {
+    background-color: rgb(15, 155, 15);
+}
+.better-suggested {
+    background-color: rgb(145, 224, 26);
+}
+.last-suggested {
+    background-color: rgb(236, 162, 51);
+}
+
+.ticker-header, .card-info {
+    text-align: center;
+}
+
+.collapsible {
+    cursor: pointer;
+}
+.active, .collapsible:hover {
+    background-color: grey;
+}
+.content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+
+.card-info {
+    padding-left: 0;
+}
+
+.sector {
+    margin-left: 10px;
+}
+
+.card ul {
+    padding-left: 15px;
+}
+
+.chart-title {
+    text-align: center;
+}
+
+.drop-down-options {
+    width: 30%;
+}
+
+.market-sentiment {
+    padding-bottom: 10px;
+}
+#gen-sent-value {
+    padding: 5px;
+    border-radius: 5px;
+}
+.neutral {
+    background-color: yellow;
+}
+.slightly-positive {
+    background-color: yellowgreen;
+}
+.positive {
+    background-color: green;
+}
+.slightly-negative {
+    background-color: rgb(173, 80, 42);
+}
+.negative {
+    background-color: red;
+}
