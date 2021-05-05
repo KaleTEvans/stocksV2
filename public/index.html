@@ -8,13 +8,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Staatliches&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css" />
-    <link rel="stylesheet" href="assets/style.css" />
+    <link rel="stylesheet" href="./assets/css/style.css" />
     <title>Stonks</title>
 </head>
 
 <body>
     <header>
-        <h1 class="title">Big Cock Stocks</h1>
+        <h1 class="title">Stonks</h1>
         <h3 class='market-sentiment'>Overall Market Sentiment: <span id='gen-sent-value'></span></h2>
     </header>
 
@@ -35,11 +35,17 @@
                     </nav>
                 </div>
                 <div class='col-8 col-md-8 col-xl-4 mb-3'>
+                    <nav class='card stock-news' id='stock-news'>
+                        <h4>Stories</h4>
+                        <ul class='news'></ul>
+                    </nav>
+                </div>
+                <!-- <div class='col-8 col-md-8 col-xl-4 mb-3'>
                     <nav class='card gov-trades' id='gov-trades'>
                         <h4>Recent Government Transactions</h4>
                         <ul class='gov-transactions'></ul>
                     </nav>
-                </div>
+                </div> -->
             </div>
         </div>
         <div class="ticker-form">
@@ -87,6 +93,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="https://code.jscharting.com/2.9.0/jscharting.js"></script>
     <script src="assets/js/config.js"></script>
+    <script src="assets/js/models/OverallSentiment.js"></script>
+    <script src="assets/js/models/PriceVsSentiment.js"></script>
+    <script src="assets/js/models/stockNewsObj.js"></script>
     <script src="assets/js/algo.js"></script>
     <script src="assets/js/script.js"></script>
 </body>

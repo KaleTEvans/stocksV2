@@ -19,11 +19,11 @@ li {
     list-style: none;
 }
 
-.top-sentiment, .gov-trades {
+.top-sentiment, .stock-news {
     height: 500px;
 }
 
-.top-suggestions, .gov-transactions {
+.top-suggestions, .news {
     padding: 2px;
     overflow: hidden;
     overflow-y: scroll;

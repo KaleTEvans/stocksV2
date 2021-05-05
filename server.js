@@ -13,7 +13,7 @@ app.use(express.json());
 // instruct the server to make all public files readily available
 app.use(express.static('public'));
 
-app.use('/db', apiRoutes);
+app.use('/api', apiRoutes);
 app.use('/', htmlRoutes);
 
 app.listen(PORT, () => {
