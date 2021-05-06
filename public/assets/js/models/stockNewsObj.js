@@ -23,10 +23,16 @@ class NewsArticle {
         newsCard.classList = `card news-card`;
         newsCard.setAttribute('id', this.link)
         newsCard.innerHTML = `
-            <img src='${this.image}'>
-            <h5 class='news-header'>${this.title}</h5>
-            <p>${this.text}</p>
-            <p class='news-sentiment'>${this.sentiment}</p>
+        <div class='news-head row align-items-center'>
+            <div class='col-5'>
+                <img src='${this.image}'>
+            </div>
+            <div class='col-7'>
+                <h6 class='news-header'>${this.title}</h6>
+            </div>
+        </div>
+        <p>${this.text}</p>
+        <p class='news-sentiment'>${this.sentiment}</p>
         `;
         return newsCard;
     }

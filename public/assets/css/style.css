@@ -5,6 +5,8 @@ header {
     align-items: center;
 }
 
+
+
 .card-group {
     margin-top: 15px;
 }
@@ -29,11 +31,34 @@ li {
     overflow-y: scroll;
 }
 
-.top-suggestions {
+.top-suggestions, .news {
     padding: 15px;
 }
 
-.top-suggested {
+.news-card {
+    background-image: url('../images/background-news.jpg');
+}
+
+.news-card img {
+    height: 75px;
+    width: 150px;
+}
+
+.news-head {
+ 
+}
+
+.news-header {
+    color: rgb(221, 203, 179);
+    text-align: center;
+}
+
+.news-card p {
+    color:rgb(221, 203, 179);
+    text-align: center;
+}
+
+.top-suggested, .news-card {
     cursor: pointer;
     opacity: 0.9;
     margin: 5px;
