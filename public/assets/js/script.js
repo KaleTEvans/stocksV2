@@ -30,6 +30,7 @@ let stockTicker;
 const topSentimentEl = document.querySelector('.top-suggestions');
 const govTradesEl = document.querySelector('.gov-transactions');
 let newsEl = document.querySelector('.news')
+let newsTicker = document.querySelector('.news-ticker');
 
 let tickerFormEl = document.querySelector('#stock-ticker');
 let tickerInput = document.querySelector('#ticker');
@@ -107,7 +108,6 @@ const bestRatedStocks = () => {
     fetch('/api/stockNews/topPicks')
     .then(res => res.json())
     .then(json => {
-        console.log(json);
         const topMentionsArr = json.data.data.all;
         let i = 0;
         const weightedMentionsArr = [];
@@ -125,7 +125,6 @@ const bestRatedStocks = () => {
         weightedMentionsArr.sort(function(a, b) {
             return b.score - a.score;
         })
-        console.log(weightedMentionsArr);
         stockSuggestions(weightedMentionsArr);
     })
 }
@@ -161,12 +160,18 @@ $('.top-suggestions').on('click', '.card', function() {
     stockTicker = '';
     // clear chart
     $('#chartDiv').html('');
+    // clear news
+    $('.news-ticker').html('');
+    $('.news').html('');
 
     let stockEl = $(this).attr('id');
     stockTicker = stockEl;
     console.log(stockTicker);
+    $('.news-ticker').html(`${stockTicker} `);
     // pass the stock ticker to the summary function
     yahooStockData(stockTicker);
+    // pass ticker to news call
+    singleStockNews(stockTicker);
 });
 
 // create cards for general news
@@ -174,9 +179,7 @@ const genNews = () => {
     fetch('/api/stockNews/genNews') 
     .then(res => res.json())
     .then(json => {
-        console.log(json);
         let newsPiece = json.data.data;
-        console.log(newsPiece);
         newsPiece.forEach(item => {
             let news = new NewsArticle(item);
             newsEl.appendChild(news.createCard());
@@ -184,10 +187,24 @@ const genNews = () => {
     });
 };
 
-$('.news').on('click', '.card', function() {
+$('.news').on('click', '.news-card', function() {
     let newsEl = $(this).attr('id');
     window.open(newsEl);
-})
+});
+
+// generate news for a single ticker when selected
+const singleStockNews = (ticker) => {
+    fetch(`/api/stockNews/${ticker}`)
+    .then(res => res.json())
+    .then(json => {
+        console.log(json);
+        let newsPiece = json.data.data;
+        newsPiece.forEach(item => {
+            let news = new NewsArticle(item);
+            newsEl.appendChild(news.createCard());
+        })
+    })
+}
 
 // function to create cards for gov transactions
 const govTrades = senatorData => {

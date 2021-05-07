@@ -71,4 +71,23 @@ router.get('/stockNews/genNews', (req, res) => {
     });
 });
 
+// stock news for one ticker
+router.get('/stockNews/:id', (req, res) => {
+    const urlStart = 'https://stocknewsapi.com/api/v1?tickers=';
+    const urlTicker = req.params.id;
+    const urlEnd = '&items=50&token=';
+    const apiId = process.env.DB_STOCKNEWS;
+
+    const apiUrl = urlStart + urlTicker + urlEnd + apiId;
+
+    fetch(apiUrl)
+    .then(res => res.json())
+    .then(data => {
+        res.send({ data });
+    })
+    .catch(err => {
+        console.log(err);
+    });
+})
+
 module.exports = router;

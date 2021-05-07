@@ -12,27 +12,37 @@ class NewsArticle {
     }
 
     getDate() {
-        console.log(this.date);
         let newDate = this.date.split(" ");
         let newFormat = `${newDate[0]} ${newDate[1]} ${newDate[2]} ${newDate[3]}`;
         return newFormat;
     }
 
+    getSentimentColor() {
+        if (this.sentiment === 'Positive') {
+            return 'news-positive'
+        }
+        if (this.sentiment === 'Negative') {
+            return 'news-negative'
+        }
+        if (this.sentiment === 'Neutral') {
+            return 'news-neutral'
+        }
+    }
+
     createCard() {
         let newsCard = document.createElement('li');
-        newsCard.classList = `card news-card`;
+        newsCard.classList = `news-card`;
         newsCard.setAttribute('id', this.link)
         newsCard.innerHTML = `
-        <div class='news-head row align-items-center'>
-            <div class='col-5'>
-                <img src='${this.image}'>
-            </div>
-            <div class='col-7'>
-                <h6 class='news-header'>${this.title}</h6>
+        <div class='news-head card'>
+            <img src='${this.image}' class='card-img-top'>
+            <div class='card-body news-text'>
+                <h6 class='news-header card-title'>${this.title}</h6>
+                <p class='card-text'>${this.text}</p>
+                <p class='date'>${this.getDate()}</p>
+                <p class='news-sentiment card-text ${this.getSentimentColor()}'>${this.sentiment}</p>
             </div>
         </div>
-        <p>${this.text}</p>
-        <p class='news-sentiment'>${this.sentiment}</p>
         `;
         return newsCard;
     }

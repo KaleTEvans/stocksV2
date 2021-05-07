@@ -35,27 +35,42 @@ li {
     padding: 15px;
 }
 
-.news-card {
-    background-image: url('../images/background-news.jpg');
-}
-
-.news-card img {
-    height: 75px;
-    width: 150px;
+.news-card-title {
+    text-align: center;
 }
 
 .news-head {
- 
+    background-color: rgb(19, 41, 19);
 }
 
 .news-header {
-    color: rgb(221, 203, 179);
+    color: rgb(17, 11, 54);
     text-align: center;
 }
 
-.news-card p {
-    color:rgb(221, 203, 179);
+.news-text {
+    background-image: url('../images/card-img.jpg');
+    background-size: cover;
+    margin: 5px;
+}
+
+.news-text p {
+    color:rgb(17, 1, 54);
     text-align: center;
+}
+
+.news-text .news-positive {
+    color: rgb(35, 143, 35);
+    font-weight: bolder;
+    
+}
+.news-text .news-negative {
+    font-weight: bolder;
+    color: rgb(138, 9, 9);
+}
+.news-text .news-neutral {
+    font-weight: bolder;
+    color: rgb(83, 83, 83);
 }
 
 .top-suggested, .news-card {
