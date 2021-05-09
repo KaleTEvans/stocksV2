@@ -218,6 +218,8 @@ const submitButtonHandler = function(event) {
         // clear news
         $('.news-ticker').html('');
         $('.news').html('');
+        // clear chart
+        $('#chartDiv').html('');
         // new ticker name
         $('.news-ticker').html(`${stockTicker} `);
         // pass ticker to news call
@@ -275,20 +277,6 @@ const techData = (dailyData, ticker, techIndicator, interval, timePeriod, series
     })
 };
 
-const technicalChartsButtonHandler = function(event) {
-    event.preventDefault();
-
-    $('#chartDiv').html('');
-
-    let time = '10';
-    let series = 'open';
-
-    let indicatorSelection = document.getElementById('tech-indicator').value;
-    let intervalSelection = document.getElementById('time-interval').value;
-    console.log(stockTicker, indicatorSelection, intervalSelection, time, series);
-    techData(selectedStock.dailyStockPriceData(), stockTicker, indicatorSelection, intervalSelection, time, series);
-};
-
 // function to create the chart
 function renderChart(data1, data2) {
     JSC.Chart('chartDiv', {
@@ -314,7 +302,6 @@ function renderChart(data1, data2) {
 }
 
 tickerFormEl.addEventListener('submit', submitButtonHandler);
-chartGenerateButtonEl.addEventListener('click', technicalChartsButtonHandler);
 
 generalMarketSentiment();
 sentimentVsPrice();

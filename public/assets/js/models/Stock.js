@@ -63,7 +63,7 @@ class Stock {
     }
 
     percentChangeColors() {
-        if (this.percentChange > 0) {
+        if (this.marketOpen < this.currentPrice) {
             return 'percent-positive';
         } else {
             return 'percent-negative';
