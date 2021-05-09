@@ -26,6 +26,7 @@ Purpose is to predict stock movement based on several factors
                 */
 
 let stockTicker;
+let selectedStock;
 
 const topSentimentEl = document.querySelector('.top-suggestions');
 const govTradesEl = document.querySelector('.gov-transactions');
@@ -68,7 +69,7 @@ const sentimentVsPrice = () => {
 }
 
 // function to create the chart
-function sentimentChart(sentiment, qqqPrice) {
+const sentimentChart = (sentiment, qqqPrice) => {
     JSC.Chart('sentimentChartDiv', {
         debug: true,
         type: 'line',
@@ -163,15 +164,16 @@ $('.top-suggestions').on('click', '.card', function() {
     // clear news
     $('.news-ticker').html('');
     $('.news').html('');
-
+    // clear stock data
+    yahooDataEl.innerHTML = '';
+    // grab ticker from id
     let stockEl = $(this).attr('id');
     stockTicker = stockEl;
     console.log(stockTicker);
     $('.news-ticker').html(`${stockTicker} `);
-    // pass the stock ticker to the summary function
-    yahooStockData(stockTicker);
-    // pass ticker to news call
+    // pass ticker to news call and stock data functions
     singleStockNews(stockTicker);
+    stockData(stockTicker);
 });
 
 // create cards for general news
@@ -197,73 +199,12 @@ const singleStockNews = (ticker) => {
     fetch(`/api/stockNews/${ticker}`)
     .then(res => res.json())
     .then(json => {
-        console.log(json);
         let newsPiece = json.data.data;
         newsPiece.forEach(item => {
             let news = new NewsArticle(item);
             newsEl.appendChild(news.createCard());
-        })
-    })
-}
-
-// function to create cards for gov transactions
-const govTrades = senatorData => {
-    senatorData.forEach(element => {
-        if (element.transactionData.length === 0) {
-            return;
-        }
-        let transactionCard = document.createElement('li');
-        transactionCard.classList = 'card gov-card';
-        transactionCard.innerHTML = `
-            <h5 class="gov-header">${element.senator}</h6>
-            <h6>Transactions:</h6>
-            ${transactionGenerator(element.transactionData)}
-            `;
-
-        govTradesEl.appendChild(transactionCard);
-    });
-    // run clickable info function once this is done
-    slideDown();
-}
-
-// function to loop over gov transactions
-const transactionGenerator = data => {
-    let transactionText = '';
-    data.forEach(element => {
-        transactionText = transactionText + `
-            <button class='collapsible font-weight-bold'>${element.ticker}</br>${purchaseTypeColor(element.purchaseType)}</button>
-            <div class='content'>
-                <p>Asset: ${element.asset}</br>
-                Date: ${element.date}</br>
-                Amount: ${element.amount}</p>
-            </div>
-        `;
-    })
-    return transactionText;
-}
-// purchase type text colors for gov transactions
-const purchaseTypeColor = purchase => {
-    if (purchase === 'Purchase') {
-        return `<span class='font-weight-bold text-success'>${purchase}</span>`
-    } else {
-        return `<span class='font-weight-bold text-danger'>${purchase}</span>`
-    }
-}
-// slide down info for gov transactions
-const slideDown = function() {
-    let govTradesBtn = document.getElementsByClassName('collapsible');
-    for (let i=0; govTradesBtn.length; i++) {
-        console.log(govTradesBtn[i]);
-        govTradesBtn[i].addEventListener('click', function() {
-            this.classList.toggle('active');
-            let content = this.nextElementSibling;
-            if (content.style.maxHeight) {
-                content.style.maxHeight = null;
-            } else {
-                content.style.maxHeight = content.scrollHeight + 'px';
-            }
         });
-    }
+    });
 };
 
 const submitButtonHandler = function(event) {
@@ -274,62 +215,78 @@ const submitButtonHandler = function(event) {
     stockTicker = tickerInput.value.trim();
 
     if (stockTicker) {
-        yahooStockData(stockTicker);
+        // clear news
+        $('.news-ticker').html('');
+        $('.news').html('');
+        // new ticker name
+        $('.news-ticker').html(`${stockTicker} `);
+        // pass ticker to news call
+        singleStockNews(stockTicker);
+        // pass ticker to get gen stock info
+        stockData(stockTicker);
     }
 };
 
-const yahooDataElements = (yahooData, alphaData) => {
-    // clear previous content
-    yahooDataEl.innerHTML = '';
-    // fill with new content
-    yahooDataEl.innerHTML = `
-        <h4 class="card-header" >Stock Name: ${yahooData.price.shortName}</h4>
-        <p class='sector'>Sector: ${yahooData.summaryProfile.sector}</p>
-        <ul class= price-data id="price-data">
-            <h5>Price Info</h5>
-            <li>Current Ask: $${yahooData.financialData.currentPrice.raw}</li>
-            <li>Price at Open: $${yahooData.summaryDetail.regularMarketOpen.raw}</li>
-            <li>Percent Change Since Open: ${yahooData.price.regularMarketChangePercent.fmt}</li>
-            <li>Previous Day Open: $${alphaData.yesterdayOpen}</li>
-            <li>Previous Day Close: $${alphaData.yesterdayClose}</li>
-            <li>50 Day Average: $${yahooData.summaryDetail.fiftyDayAverage.raw}</li>
-            <li>200 Day Average: $${yahooData.summaryDetail.twoHundredDayAverage.raw}</li>
-            <li>Year High: $${yahooData.summaryDetail.fiftyTwoWeekHigh.raw}</li>
-            <li>Year Low: $${yahooData.summaryDetail.fiftyTwoWeekLow.raw}</li>
-        </ul>
-        <ul class="volume-data" id="volume-data">
-            <h5>Volume Info</h5>
-            <li>Current Volume: ${yahooData.summaryDetail.volume.raw}</li>
-            <li>Average Volume: ${yahooData.summaryDetail.averageVolume.raw}</li>
-            <li>10 Day Volume: ${yahooData.summaryDetail.averageDailyVolume10Day.raw}</li>
-            <li>Three Month Volume: ${yahooData.price.averageDailyVolume3Month.raw}</li>
-            <li>Previous Day Volume: ${alphaData.yesterdayVol}</li>
-        </ul>
-        <ul class="other-data" id="other-data">
-            <h5>Other Data</h5>
-            <li>Held by Insiders (% of Float): ${(yahooData.defaultKeyStatistics.heldPercentInsiders.raw * 100).toFixed(2)}%</li>
-            <li>Held by Institutions (% of Float): ${(yahooData.defaultKeyStatistics.heldPercentInstitutions.raw * 100).toFixed(2)}%</li>
-            <li>Average Price Target: $${yahooData.financialData.targetMeanPrice.raw}</li>
-            <li>Shares Short (% of Float): ${yahooData.defaultKeyStatistics.shortPercentOfFloat.fmt}</li>
-            <li>Short Float: ${yahooData.defaultKeyStatistics.sharesShort.raw}</li>
-            <li>Short Float Previus Month: ${yahooData.defaultKeyStatistics.sharesShortPriorMonth.raw}</li>
-            <li>Total Float: ${yahooData.defaultKeyStatistics.floatShares.raw}</li>
-        </ul>
-        `;
-    return new Promise((resolve) => {
-        resolve();
-    });
+const stockData = (ticker) => {
+    let yahoo;
+    let alphaVantage;
+    selectedStock = '';
+    fetch(`/api/yahoo/${ticker}`)
+    .then(res => res.json())
+    .then(json => {
+        yahoo = json.data;
+    }).then(() => {
+        fetch(`/api/alphaIndex/${ticker}`)
+        .then(res => res.json())
+        .then(json => {
+            alphaVantage = json.data;
+        }).then(() => {
+            selectedStock = new Stock(yahoo, alphaVantage);
+            selectedStock.previousDayData();
+            yahooDataEl.innerHTML = selectedStock.stockDataElements();
+            techData(selectedStock.dailyStockPriceData(), ticker, 'SMA', 'daily', '10', 'open');
+        })
+    })
 }
+
+const techData = (dailyData, ticker, techIndicator, interval, timePeriod, seriesType) => {
+    // fetch the technical data
+    fetch(`/api/alphaIndex/${techIndicator}/${ticker}/${interval}/${timePeriod}/${seriesType}`)
+    .then(res => res.json())
+    .then(json => {
+        let data = json.data;
+        $("#tech-chart-title").html(data['Meta Data']['2: Indicator']);
+        let techAnalysis = data['Technical Analysis: ' + techIndicator];
+        // empty the tech analysis array
+        techAnalysisArr = [];
+        // loop over the object to put items in the array
+        for (var x in techAnalysis) {
+            // get price value
+            let dataValue = parseFloat(techAnalysis[x][techIndicator]);
+            // new array to store each date and price value
+            let newArr = [];
+            newArr.push(new Date(x));
+            newArr.push(dataValue);
+            //push to main array
+            techAnalysisArr.push(newArr);
+        }
+        techAnalysisArr = techAnalysisArr.slice(0, 100);
+        renderChart(techAnalysisArr, dailyData);
+    })
+};
 
 const technicalChartsButtonHandler = function(event) {
     event.preventDefault();
 
     $('#chartDiv').html('');
 
+    let time = '10';
+    let series = 'open';
+
     let indicatorSelection = document.getElementById('tech-indicator').value;
     let intervalSelection = document.getElementById('time-interval').value;
-    console.log(stockTicker, indicatorSelection, intervalSelection, timePeriod, seriesType);
-    technicalIndicators(stockTicker, indicatorSelection, intervalSelection, timePeriod, seriesType);
+    console.log(stockTicker, indicatorSelection, intervalSelection, time, series);
+    techData(selectedStock.dailyStockPriceData(), stockTicker, indicatorSelection, intervalSelection, time, series);
 };
 
 // function to create the chart
@@ -354,9 +311,6 @@ function renderChart(data1, data2) {
             }
         ]
     });
-    return new Promise((resolve) => {
-        resolve();
-    });
 }
 
 tickerFormEl.addEventListener('submit', submitButtonHandler);
@@ -366,3 +320,64 @@ generalMarketSentiment();
 sentimentVsPrice();
 bestRatedStocks();
 genNews();
+stockData('TSLA');
+
+// // function to create cards for gov transactions
+// const govTrades = senatorData => {
+//     senatorData.forEach(element => {
+//         if (element.transactionData.length === 0) {
+//             return;
+//         }
+//         let transactionCard = document.createElement('li');
+//         transactionCard.classList = 'card gov-card';
+//         transactionCard.innerHTML = `
+//             <h5 class="gov-header">${element.senator}</h6>
+//             <h6>Transactions:</h6>
+//             ${transactionGenerator(element.transactionData)}
+//             `;
+
+//         govTradesEl.appendChild(transactionCard);
+//     });
+//     // run clickable info function once this is done
+//     slideDown();
+// }
+
+// // function to loop over gov transactions
+// const transactionGenerator = data => {
+//     let transactionText = '';
+//     data.forEach(element => {
+//         transactionText = transactionText + `
+//             <button class='collapsible font-weight-bold'>${element.ticker}</br>${purchaseTypeColor(element.purchaseType)}</button>
+//             <div class='content'>
+//                 <p>Asset: ${element.asset}</br>
+//                 Date: ${element.date}</br>
+//                 Amount: ${element.amount}</p>
+//             </div>
+//         `;
+//     })
+//     return transactionText;
+// }
+// // purchase type text colors for gov transactions
+// const purchaseTypeColor = purchase => {
+//     if (purchase === 'Purchase') {
+//         return `<span class='font-weight-bold text-success'>${purchase}</span>`
+//     } else {
+//         return `<span class='font-weight-bold text-danger'>${purchase}</span>`
+//     }
+// }
+// // slide down info for gov transactions
+// const slideDown = function() {
+//     let govTradesBtn = document.getElementsByClassName('collapsible');
+//     for (let i=0; govTradesBtn.length; i++) {
+//         console.log(govTradesBtn[i]);
+//         govTradesBtn[i].addEventListener('click', function() {
+//             this.classList.toggle('active');
+//             let content = this.nextElementSibling;
+//             if (content.style.maxHeight) {
+//                 content.style.maxHeight = null;
+//             } else {
+//                 content.style.maxHeight = content.scrollHeight + 'px';
+//             }
+//         });
+//     }
+// };

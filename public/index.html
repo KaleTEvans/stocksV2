@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Staatliches&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather&family=Questrial&family=Roboto:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css" />
     <link rel="stylesheet" href="./assets/css/style.css" />
     <title>Stonks</title>
@@ -14,22 +15,23 @@
 
 <body>
     <header>
-        <h1 class="title">Stonks</h1>
-        <h3 class='market-sentiment'>Overall Market Sentiment: <span id='gen-sent-value'></span></h2>
+        <div class='header-img'>
+        </div>
     </header>
 
     <main>
         <div class='sentiment-info'>
+            <h3 class='market-sentiment'>Overall Market Sentiment: <span id='gen-sent-value'></span></h2>
             <div class='row align-items-center'>
                 <div class="col-12 col-md-12 col-xl-6 mb-3 sentiment">
                     <div class="card chart-box">
-                        <h4 class="chart-title">Sentiment in the Last Month</h4>
+                        <h4 class="news-card-title">Sentiment in the Last Month</h4>
                         <div id="sentimentChartDiv" class="flex-row" style="width:95%; height:462px; margin:0 auto;"></div>
                     </div>
                 </div>
                 <div class='col-4 col-md-4 col-xl-2 mb-3'>
                     <nav class='card top-sentiment' id='top-sentiment'>
-                        <h4>Top Sentiment</h4>
+                        <h4 class='news-card-title'>Top Sentiment</h4>
                         <ul class='top-suggestions'>
                         </ul>
                     </nav>
@@ -56,7 +58,7 @@
             </form>
         </div>
         <div class="card-group" >
-            <div class="col-12 col-md-3 col-xl-3 mb-3">
+            <div class="col-12 col-md-4 col-xl-3 mb-3">
                 <div class="card" id='yahoo-data'></div>
             </div>
             <div class="col-12 col-md-12 col-xl-5 mb-5">
@@ -96,6 +98,7 @@
     <script src="assets/js/models/OverallSentiment.js"></script>
     <script src="assets/js/models/PriceVsSentiment.js"></script>
     <script src="assets/js/models/stockNewsObj.js"></script>
+    <script src="assets/js/models/Stock.js"></script>
     <script src="assets/js/algo.js"></script>
     <script src="assets/js/script.js"></script>
 </body>

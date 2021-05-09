@@ -27,7 +27,7 @@ class OverallSentiment {
 
     sentimentValue(sentimentPositive, sentimentNegative, sentimentNeutral) {
         let genSentimentValue = document.getElementById('gen-sent-value');
-        if (sentimentNeutral > sentimentPositive + sentimentNegative) {
+        if (sentimentNeutral > sentimentPositive + sentimentNegative || sentimentPositive === sentimentNegative) {
             genSentimentValue.textContent = 'Neutral';
             genSentimentValue.classList = 'neutral';
         } 
