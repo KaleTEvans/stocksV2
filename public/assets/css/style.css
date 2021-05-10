@@ -64,7 +64,7 @@ header {
 .ticker-form {
     display: flex;
     justify-content: center;
-    margin: 25px 0;
+    margin: 15px 0;
 }
 
 li {
@@ -72,7 +72,7 @@ li {
 }
 
 .top-sentiment, .stock-news {
-    height: 500px;
+    height: 400px;
 }
 
 .top-suggestions, .news {
@@ -137,6 +137,22 @@ li {
 .news-text p {
     color:rgb(17, 1, 54);
     text-align: center;
+}
+
+.news-info {
+    padding: 0 5px;
+    border: 1px solid lightgray;
+    background-color: whitesmoke;
+    border-radius: 5px;
+}
+
+.news-info p {
+    font-weight: bold;
+}
+
+.card-img {
+    padding: 0;
+    background-size: cover;
 }
 
 .news-text .news-positive {

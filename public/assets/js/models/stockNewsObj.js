@@ -35,11 +35,12 @@ class NewsArticle {
         newsCard.setAttribute('id', this.link)
         newsCard.innerHTML = `
         <div class='news-head card'>
-            <img src='${this.image}' class='card-img-top'>
             <div class='card-body news-text'>
-                <h6 class='news-header card-title'>${this.title}</h6>
-                <p class='card-text'>${this.text}</p>
-                <p class='date'>${this.getDate()}</p>
+                <div class='row news-info mb-1'>
+                    <img src='${this.image}' class='card-img col-4'>
+                    <p class='card-text col-8 text-left'>${this.title}</p>
+                </div>
+                <p class='date mb-0'>${this.getDate()}</p>
                 <p class='news-sentiment card-text ${this.getSentimentColor()}'>${this.sentiment}</p>
             </div>
         </div>

@@ -76,7 +76,7 @@ const sentimentChart = (sentiment, price, ticker, chartLocation) => {
         type: 'line',
         legend: {
             template: '%icon %name',
-            position: 'inside top left'
+            position: 'inside top right'
         },
         defaultPoint_marker_type: 'none',
         xAxis_crosshair_enabled: true,
@@ -251,6 +251,7 @@ const stockData = (ticker) => {
             yahooDataEl.innerHTML = selectedStock.stockDataElements();
             techData(selectedStock.dailyStockPriceData(), ticker, 'SMA', 'daily', '10', 'open');
             singleSentimentVsPrice(alphaVantage, ticker);
+            volumeChart(selectedStock.dailyVolumeData());
         })
     })
 }
@@ -261,7 +262,6 @@ const techData = (dailyData, ticker, techIndicator, interval, timePeriod, series
     .then(res => res.json())
     .then(json => {
         let data = json.data;
-        $("#tech-chart-title").html(data['Meta Data']['2: Indicator']);
         let techAnalysis = data['Technical Analysis: ' + techIndicator];
         // empty the tech analysis array
         techAnalysisArr = [];
@@ -282,13 +282,13 @@ const techData = (dailyData, ticker, techIndicator, interval, timePeriod, series
 };
 
 // function to create the chart
-function renderChart(data1, data2) {
+const renderChart = (data1, data2) => {
     JSC.Chart('smaChartDiv', {
         debug: true,
         type: 'line',
         legend: {
             template: '%icon %name',
-            position: 'inside top left'
+            position: 'inside top right'
         },
         defaultPoint_marker_type: 'none',
         xAxis_crosshair_enabled: true,
@@ -300,6 +300,26 @@ function renderChart(data1, data2) {
             }, {
                 name: 'Price at Open',
                 points: data2
+            }
+        ]
+    });
+};
+
+// function to create volume chart
+const volumeChart = (volume) => {
+    JSC.Chart('volumeChartDiv', {
+        debug: true,
+        type: 'line',
+        legend: {
+            template: '%icon %name',
+            position: 'inside top right'
+        },
+        defaultPoint_marker_type: 'none',
+        xAxis_crosshair_enabled: true,
+        series: [
+            {
+                name: 'Volume',
+                points: volume
             }
         ]
     });

@@ -30,6 +30,7 @@ class Stock {
         this.previousDayValues = [];
         this.dailyPriceArr = [];
         this.techValuesArr = [];
+        this.volumeArr = [];
     }
 
     previousDayData() {
@@ -122,6 +123,23 @@ class Stock {
         }
 
         return this.dailyPriceArr;
+    }
+
+    dailyVolumeData() {
+        let dailyVolume = this.alphaVantage['Time Series (Daily)'];
+        // push volume values into an array
+        for (var x in dailyVolume) {
+            // get price value
+            let volume = parseFloat(dailyVolume[x]['5. volume']);
+            // new array to store data
+            let volArr = [];
+            volArr.push(new Date(x));
+            volArr.push(volume);
+            // push to dailypricearr
+            this.volumeArr.push(volArr);
+        }
+
+        return this.volumeArr;
     }
 }
 
