@@ -109,7 +109,6 @@ class Stock {
 
     dailyStockPriceData() {
         let dailyData = this.alphaVantage['Time Series (Daily)'];
-        let arr = [];
         // store the daily open values in an array
         for (var x in dailyData) {
             // get price value

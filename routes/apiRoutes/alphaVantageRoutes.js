@@ -3,12 +3,13 @@ require('dotenv').config();
 
 const router = require('express').Router();
 
-// qqq index price
-router.get('/alphaIndex', (req, res) => {
-    const baseUrl = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=QQQ&apikey=";
-    const apiId = process.env.DB_ALPHAVANTAGE;
+// alpha vantage time series for ticker
+router.get('/alphaIndex/:id', (req, res) => {
+    const baseUrl = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=";
+    const ticker = req.params.id;
+    const apiId = `&apikey=${process.env.DB_ALPHAVANTAGE}`;
 
-    const apiUrl = baseUrl + apiId;
+    const apiUrl = baseUrl + ticker + apiId;
 
     fetch(apiUrl)
     .then(res => res.json())
@@ -42,23 +43,5 @@ router.get('/alphaIndex/:indicator/:ticker/:interval/:timePeriod/:series', (req,
         console.log(err);
     });
 })
-
-// alpha vantage time series for ticker
-router.get('/alphaIndex/:id', (req, res) => {
-    const baseUrl = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=";
-    const ticker = req.params.id;
-    const apiId = `&apikey=${process.env.DB_ALPHAVANTAGE}`;
-
-    const apiUrl = baseUrl + ticker + apiId;
-
-    fetch(apiUrl)
-    .then(res => res.json())
-    .then(data => {
-        res.send({ data });
-    })
-    .catch(err => {
-        console.log(err);
-    });
-});
 
 module.exports = router;

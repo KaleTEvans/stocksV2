@@ -50,27 +50,28 @@ const generalMarketSentiment = () => {
     });
 }
 
-const sentimentVsPrice = () => {
+const sentimentVsPrice = (ticker) => {
     let sentiment;
     let price;
+    const chartLocation = 'sentimentChartDiv';
     fetch('/api/stockNews/pastSentiment') 
     .then(res => res.json())
     .then(data => {
         sentiment = data;
-    }).then(x => {
-        return fetch('/api/alphaIndex')})
+    }).then(() => {
+        return fetch(`api/alphaIndex/${ticker}`)})
     .then(res => res.json())
     .then(data => {
         price = data;
-    }).then(x => {
-        let arrays = new PriceVsSentiment(sentiment, price);
-        sentimentChart(arrays.getPastSentiment(), arrays.getIndexPrice());
+    }).then(() => {
+        let arrays = new PriceVsSentiment(sentiment, price, ticker);
+        sentimentChart(arrays.getPastSentiment(), arrays.getIndexPrice(), ticker, chartLocation);
     })
 }
 
 // function to create the chart
-const sentimentChart = (sentiment, qqqPrice) => {
-    JSC.Chart('sentimentChartDiv', {
+const sentimentChart = (sentiment, price, ticker, chartLocation) => {
+    JSC.Chart(`${chartLocation}`, {
         debug: true,
         type: 'line',
         legend: {
@@ -96,9 +97,9 @@ const sentimentChart = (sentiment, qqqPrice) => {
                 yAxis: 'leftAxis',
                 points: sentiment
             }, {
-                name: 'QQQ Movement',
+                name: `${ticker} Movement`,
                 yAxis: 'rightAxis',
-                points: qqqPrice
+                points: price
             }
         ]
     });
@@ -232,6 +233,7 @@ const submitButtonHandler = function(event) {
 const stockData = (ticker) => {
     let yahoo;
     let alphaVantage;
+    let alphaVantageData;
     selectedStock = '';
     fetch(`/api/yahoo/${ticker}`)
     .then(res => res.json())
@@ -241,12 +243,14 @@ const stockData = (ticker) => {
         fetch(`/api/alphaIndex/${ticker}`)
         .then(res => res.json())
         .then(json => {
-            alphaVantage = json.data;
+            alphaVantage = json;
+            alphaVantageData = json.data;
         }).then(() => {
-            selectedStock = new Stock(yahoo, alphaVantage);
+            selectedStock = new Stock(yahoo, alphaVantageData);
             selectedStock.previousDayData();
             yahooDataEl.innerHTML = selectedStock.stockDataElements();
             techData(selectedStock.dailyStockPriceData(), ticker, 'SMA', 'daily', '10', 'open');
+            singleSentimentVsPrice(alphaVantage, ticker);
         })
     })
 }
@@ -279,7 +283,7 @@ const techData = (dailyData, ticker, techIndicator, interval, timePeriod, series
 
 // function to create the chart
 function renderChart(data1, data2) {
-    JSC.Chart('chartDiv', {
+    JSC.Chart('smaChartDiv', {
         debug: true,
         type: 'line',
         legend: {
@@ -291,7 +295,7 @@ function renderChart(data1, data2) {
         yAxis_formatString: 'c',
         series: [
             {
-                name: 'Technical Indicator',
+                name: 'SMA',
                 points: data1
             }, {
                 name: 'Price at Open',
@@ -299,12 +303,28 @@ function renderChart(data1, data2) {
             }
         ]
     });
+};
+
+// create arrays for sentiment vs price over the last month for 
+//  a single ticker
+const singleSentimentVsPrice = (alphaVantage, ticker) => {
+    // label chart location
+    const chartLocation = 'priceChartDiv';
+    // fetch stock's past sentiment
+    fetch(`/api/stockNews/ticker/${ticker}`)
+    .then(res => res.json())
+    .then(json => {
+        let data = json.data
+        let arrays = new PriceVsSentiment(data, alphaVantage, ticker);
+        // call charting function
+        sentimentChart(arrays.getPastTickerSentiment(), arrays.getIndexPrice(), ticker, chartLocation);
+    })
 }
 
 tickerFormEl.addEventListener('submit', submitButtonHandler);
 
 generalMarketSentiment();
-sentimentVsPrice();
+sentimentVsPrice('QQQ');
 bestRatedStocks();
 genNews();
 stockData('TSLA');

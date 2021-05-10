@@ -20,6 +20,25 @@ router.get('/stockNews', (req, res) => {
     });
 });
 
+// sentiment for one ticker
+router.get('/stockNews/ticker/:id', (req, res) => {
+    const baseUrl = 'https://stocknewsapi.com/api/v1/stat?&tickers=';
+    const ticker = req.params.id;
+    const urlEnd = '&date=last30days&token='
+    const apikey = process.env.DB_STOCKNEWS;
+    
+    const apiUrl = baseUrl + ticker + urlEnd + apikey;
+
+    fetch(apiUrl)
+    .then(res => res.json())
+    .then(data => {
+        res.send({ data });
+    })
+    .catch(err => {
+        console.log(err);
+    });
+})
+
 // sentiment over last 30 days
 router.get('/stockNews/pastSentiment', (req, res) => {
     const baseUrl = 'https://stocknewsapi.com/api/v1/stat?&section=alltickers&date=last30days&token=';

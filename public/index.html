@@ -61,10 +61,14 @@
             <div class="col-12 col-md-4 col-xl-3 mb-3">
                 <div class="card" id='yahoo-data'></div>
             </div>
-            <div class="col-12 col-md-12 col-xl-5 mb-5">
-                <div class="card chart-box">
+            <div class="col-12 col-md-12 col-xl-4 mb-5">
+                <div class="card chart-box mb-3">
                     <h4 class='chart-title'><span id="tech-chart-title"></span></h4>
-                    <div id="chartDiv" class="flex-row" style="width:95%; height:500px; margin:0 auto;"></div>
+                    <div id="smaChartDiv" class="flex-row" style="width:95%; height:300px; margin:0 auto;"></div>
+                </div>
+                <div class="card chart-box">
+                    <h4 class='chart-title'><span id="sentiment-chart-title">Sentiment Vs Price (Monthly)</span></h4>
+                    <div id="priceChartDiv" class="flex-row" style="width:95%; height:300px; margin:0 auto;"></div>
                 </div>
             </div>
         </div>
@@ -78,12 +82,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="https://code.jscharting.com/2.9.0/jscharting.js"></script>
-    <script src="assets/js/config.js"></script>
     <script src="assets/js/models/OverallSentiment.js"></script>
     <script src="assets/js/models/PriceVsSentiment.js"></script>
     <script src="assets/js/models/stockNewsObj.js"></script>
     <script src="assets/js/models/Stock.js"></script>
-    <script src="assets/js/algo.js"></script>
     <script src="assets/js/script.js"></script>
 </body>
 </html>
