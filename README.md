@@ -13,7 +13,7 @@
 ## Description
 This is an application designed to provide a personal stock dashboard. The app takes data from several Stock APIs and presents a 
 visual dashboard to provide trending stocks in the news and their current sentiment as well as provide several bits of technical
-data and charts to make predictions on price movement.
+data and charts to make predictions on price movement. Note that as this is still a work in progress, there is no live website yet.
 
 ## Future Additions
 * Provide data for recent senator stock transactions to compare to current trending tickers to determine if there are any correlations
