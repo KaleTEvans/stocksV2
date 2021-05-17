@@ -41,6 +41,8 @@ const yahooDataEl = document.querySelector('#yahoo-data');
 let cardHeaderEl = document.querySelector('.card-header');
 const chartGenerateButtonEl = document.getElementById('tech-charts');
 
+
+// add button to return to the overall market news
 const generalMarketSentiment = () => {
     fetch('/api/stockNews')
     .then(res => res.json())
