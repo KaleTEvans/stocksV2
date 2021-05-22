@@ -1,4 +1,8 @@
-
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
 header {
     display: flex;
@@ -15,6 +19,13 @@ header {
     background-image: url('../images/title-img.jpg');
     background-size: cover;
     margin: 15px;
+}
+
+main {
+    background-image: url('../images/page-background.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    padding-top: 5px;
 }
 
 .market-sentiment {
@@ -51,10 +62,27 @@ header {
     font-family: 'Merriweather', serif;
 }
 
+.enter-ticker-text {
+    font-family: 'Merriweather', serif;
+}
+input {
+    width: 100px;
+    border: 2px solid rgb(19, 41, 19);
+    border-radius: 5px;
+}
+.submit-button {
+    background-color: rgb(232, 255, 240);
+    border-radius: 5px;
+    font-weight: bold;
+    padding: 0 5px;
+}
+.submit-button:hover {
+    opacity: 0.8;;
+}
+
 .sentiment-info {
     padding: 0 50px;
-    background-image: url('../images/page-background.jpg');
-    background-size: cover;
+    
 }
 
 .card-group {
@@ -117,6 +145,11 @@ li {
     background-color: darkolivegreen;
     font-weight: bold;
     color: rgb(232, 255, 240);
+}
+
+.card-header {
+    background-color: rgb(221, 221, 221);
+    font-weight: bold;
 }
 
 .news-head {

@@ -73,7 +73,7 @@ class Stock {
 
     stockDataElements() {
         return `
-            <h4 class='card-header'>${this.name}</h4>
+            <h4 class='card-header ${this.percentChangeColors()}'>${this.name}</h4>
             <p class='sector'>Sector: ${this.sector}</p>
             <ul class='price-data id='price-data'>
                 <h5>Price Info</h5>
