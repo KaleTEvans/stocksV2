@@ -31,6 +31,11 @@ class Stock {
         this.dailyPriceArr = [];
         this.techValuesArr = [];
         this.volumeArr = [];
+
+        // methods of comparison
+        this.volDivergence = (Math.abs(this.tenDayVol - this.threeMonthVol) / this.threeMonthVol) * 100;
+        this.fiftyDayDivergence = (Math.abs(this.currentPrice - this.fiftyDayAvg) / this.fiftyDayAvg) * 100;
+        this.twoHddDayDivergence = (Math.abs(this.currentPrice - this.twoHddDayAvg) / this.twoHddDayAvg) * 100;
     }
 
     previousDayData() {
@@ -141,5 +146,6 @@ class Stock {
 
         return this.volumeArr;
     }
+
 }
 
