@@ -51,6 +51,7 @@ class Stock {
         }
         let dailyData = this.alphaVantage['Time Series (Daily)'];
         let previousDayData = dailyData[yesterdayDate];
+        console.log(dailyData);
         let open = previousDayData['1. open'];
         let close = previousDayData['4. close'];
         let vol = previousDayData['5. volume'];

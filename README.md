@@ -15,6 +15,8 @@ This is an application designed to provide a personal stock dashboard. The app t
 visual dashboard to provide trending stocks in the news and their current sentiment as well as provide several bits of technical
 data and charts to make predictions on price movement. Note that as this is still a work in progress, there is no live website yet.
 
+Deployed At: [https://floating-dusk-83595.herokuapp.com/](https://floating-dusk-83595.herokuapp.com/)
+
 ## Future Additions
 * Provide data for recent senator stock transactions to compare to current trending tickers to determine if there are any correlations
 * Create an algorithm to compare top mentioned tickers to several pieces of technical data, such as simple moving average divergence and
