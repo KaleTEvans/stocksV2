@@ -15,7 +15,7 @@ https://stock-news-dashboard.herokuapp.com/
 ## Description
 This is an application designed to provide a personal stock dashboard. The app takes data from several Stock APIs and presents a 
 visual dashboard to provide trending stocks in the news and their current sentiment as well as provide several bits of technical
-data and charts to make predictions on price movement. Note that as this is still a work in progress, there is no live website yet.
+data and charts to make predictions on price movement. 
 
 Deployed At: [https://floating-dusk-83595.herokuapp.com/](https://floating-dusk-83595.herokuapp.com/)
 
